@@ -6,9 +6,13 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    username = serializers.CharField(max_length=150, validators=[UniqueValidator(queryset=User.objects.all(), message="email already registered.")])
+    username = serializers.CharField(
+        max_length=150, 
+        validators=[UniqueValidator(queryset=User.objects.all(), message="email already registered.")])
     password = serializers.CharField(max_length=127, write_only=True)
-    email = serializers.EmailField(max_length=127, validators=[UniqueValidator(queryset=User.objects.all(), message="username already taken.")])
+    email = serializers.EmailField(
+        max_length=127, 
+        validators=[UniqueValidator(queryset=User.objects.all(), message="username already taken.")])
     birthdate = serializers.DateField(allow_null=True)
     first_name = serializers.CharField(max_length=50)
     last_name = serializers.CharField(max_length=50)

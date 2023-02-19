@@ -21,12 +21,12 @@ class MoviesView(APIView):
         serializer = MovieSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        serializer.save(owner=request.user)
+        serializer.save(owner_id=request.user.id)
 
         return Response(serializer.data, status.HTTP_201_CREATED)
 
 
-class MoviesDetailViews():
+class MoviesDetailViews(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [MoviesDetailsPermission]
 
@@ -36,9 +36,8 @@ class MoviesDetailViews():
         serializer = MovieSerializer(movie)
         return Response(serializer.data, status.HTTP_200_OK)
 
-    def delete(self, request: Request) -> Response:
+    def delete(self, request: Request, movie_id) -> Response:
         movie = get_object_or_404(Movie, id=movie_id)
-        
+
         movie.delete()
         return Response(status=status.HTTP_201_CREATED)
-

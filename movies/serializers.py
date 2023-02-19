@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from accounts.models import User
-from models import Movie
+from .models import Movie
 
 
 class MovieSerializer(serializers.Serializer):
@@ -12,7 +12,7 @@ class MovieSerializer(serializers.Serializer):
     added_by = serializers.SerializerMethodField(read_only=True)
 
     def get_added_by(self, obj: Movie) -> str:
-        user = User.objects.get(id=obj.owner)
+        user = User.objects.get(id=obj.owner_id)
         return user.email
 
     def create(self, validated_data: dict):
