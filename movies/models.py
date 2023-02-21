@@ -19,7 +19,7 @@ class Movie(models.Model):
         default=RatingChoices.DEFAULT,
     )
     synopsis = models.TextField(null=True, default=None)
-    owner = models.ForeignKey(
+    user = models.ForeignKey(
         "accounts.User",
         on_delete=models.CASCADE,
         related_name="movies",
